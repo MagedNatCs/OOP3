@@ -69,9 +69,9 @@ public abstract class Hero extends Unit implements HeroicUnit {
         return false;
     }
 
-    public void gainEXP(int xp) {
+    public boolean gainEXP(int xp) {
         this.Experience += xp;
-        LevelUp();
+        return LevelUp();
     }
 
     public void accept(Visitor v) {
