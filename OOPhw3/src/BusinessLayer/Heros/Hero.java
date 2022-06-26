@@ -81,7 +81,7 @@ public abstract class Hero extends Unit implements HeroicUnit {
     public void visit(Enemy opponent) {
         this.engage(opponent);
         if (opponent.getHealthAmount() == 0) {
-            gainEXP(enemy.getEXP());
+            gainEXP(opponent.getEXP());
         }
     }
 
