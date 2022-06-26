@@ -38,7 +38,7 @@ public class Mage extends Hero implements HeroicUnit {
         this.Manapool = this.Manapool + (25 * getLevel());
         this.currentMana = Math.min(this.currentMana + (Manapool / 4), Manapool);
         this.spellPower = this.spellPower + (10 * getLevel());
-        IO.Write(" Mage Bouns: " + 25 * getLevel() + " Manapool " + currentMana + (Manapool / 4) + " Mana " + 10 * getLevel() + " SpellPower ");
+        IO.Write(" Mage Bonus: " + 25 * getLevel() + " Manapool " + currentMana + (Manapool / 4) + " Mana " + 10 * getLevel() + " SpellPower ");
         return true;
     }
 

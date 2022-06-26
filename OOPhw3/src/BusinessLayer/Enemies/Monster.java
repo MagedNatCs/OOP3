@@ -7,6 +7,11 @@ import static java.lang.Math.random;
 public class Monster extends Enemy{
     private int visionRange;
 
+    public Monster(String name, int healthpool, int healthamount, int attackpoints, int defensepoints, int x, int y, char symbol, int experienceValue,int visionRange) {
+        super(name, healthpool, healthamount, attackpoints, defensepoints, x, y, symbol, experienceValue);
+        this.visionRange=visionRange;
+    }
+
     public void movement(Unit player){
         int dx,dy;
         if(this.range(player)<visionRange){
