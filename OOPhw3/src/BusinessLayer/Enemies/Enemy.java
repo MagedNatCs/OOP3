@@ -1,4 +1,9 @@
 package BusinessLayer.Enemies;
 
-public abstract class Enemy {
+import BusinessLayer.Tiles.Unit;
+
+public abstract class Enemy extends Unit {
+    protected static char symbol;
+    protected static int experienceValue;
+    
 }
