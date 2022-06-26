@@ -57,14 +57,16 @@ public class Warrior extends Hero implements HeroicUnit {
 
     public boolean LevelUp()
     {
-        if(super.LevelUp()){
             Cooldown = 0;
             setHealthpool(getHealthpool() + (5*getLevel()));
             setAttack(getAttack() + (2*getLevel()));
             setDefense(getDefense() + getLevel());
             IO.Write(" Warrior Bouns: " + 5*getLevel() + " Healthpool " + 2*getLevel() + " Attackpoints " + getLevel() + " Defensepoints ");
             return true;
-        }
+    }
+    public boolean gainEXP(int Exp){
+        if(super.gainEXP(Exp))
+            return LevelUp();
         return false;
     }
 
