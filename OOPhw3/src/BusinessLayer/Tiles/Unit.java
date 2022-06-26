@@ -4,6 +4,8 @@ package BusinessLayer.Tiles;
 import View.IOController;
 import View.IOoperation;
 
+import static java.lang.Math.sqrt;
+
 public abstract class Unit extends Tile {
 
     private String name;
@@ -76,5 +78,8 @@ public abstract class Unit extends Tile {
             IO.Write(name +" dealt damage equal to " + attackerDamage + " to " + opponent.getName() + ".");
             opponent.impair(attackerDamage);
         }
+    }
+    public int range(Unit other){
+        return (int)sqrt(((this.getXcord()-other.getXcord())*(this.getXcord()-other.getXcord()))+((this.getYcord()-other.getYcord())*(this.getYcord()-other.getYcord())));
     }
 }
