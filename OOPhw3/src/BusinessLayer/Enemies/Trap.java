@@ -9,14 +9,15 @@ public class Trap extends Enemy{
     private boolean visible=true;
 
     public Trap(String name, int healthpool, int healthamount, int attackpoints,
-                int defensepoints, int x, int y, char symbol, int experienceValue,int visibilityTime,int invisibilityTime) {
-        super(name, healthpool, healthamount, attackpoints, defensepoints, x, y, symbol, experienceValue);
+                int defensepoints, int x, int y, char symbol, int experienceValue,int visibilityTime,int invisibilityTime, Unit hero) {
+        super(name, healthpool, healthamount, attackpoints, defensepoints, x, y, symbol, experienceValue,hero);
         this.visibilityTime=visibilityTime;
         this.invisibilityTime=invisibilityTime;
     }
 
 
-    public void updateState(){
+    @Override
+    public int[] Action(){
         if(visible){
             if(visibilityTime==ticksCount){
                 visible=false;
@@ -33,12 +34,17 @@ public class Trap extends Enemy{
             else
                 ticksCount++;
         }
+        if(this.range(getHero())<2){this.engage(getHero());}
+        int [] cords = new int [2];
+        cords[0] = getXcord();
+        cords[1] = getYcord();
+        return cords;
     }
-    public boolean attack(Unit player){
-        if(this.range(player)<2){
-            //attack
-            return true;
-        }
-        else return false;
+
+
+    public String toString(){
+        if(visible) return super.toString();
+        return String.valueOf('.');
     }
+
 }

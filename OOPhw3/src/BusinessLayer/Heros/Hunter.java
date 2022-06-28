@@ -15,18 +15,21 @@ public class Hunter extends Hero implements HeroicUnit {
     private IOoperation IO = new IOController();
 
     public Hunter(int x, int y, String name , int healthamount,int healthpool,int attackpoints,int defensepoints,int range){
-        super(x,y,name,healthamount,healthpool,attackpoints,defensepoints);
+        super(x,y,name,healthamount,healthpool,attackpoints,defensepoints,1);
         this.range = range;
     }
 
 
+    public String description(){
+        return  super.description() + " arrowsCount :" + arrowscount +" ticksCount: " + tickscount +" range: " + range;
+    }
     public boolean gainEXP(int xp) {
         if(super.gainEXP(xp))
-            return this.LevelUp();
+            return this.LevelUps();
         return  false;
     }
 
-    public boolean LevelUp(){
+    public boolean LevelUps(){
         arrowscount = arrowscount +(10*getLevel());
         setAttack(getAttack()+(2*getLevel()));
         setDefense(getDefense()+getLevel());
@@ -73,7 +76,7 @@ public class Hunter extends Hero implements HeroicUnit {
             if (getAttack() - def > 0) {
                 IO.Write(getName() + " cast Shoot and shot " + toAttack.getName() + " for " + getAttack() +" damage");
                 if (toAttack.impair(getAttack())) {
-                    gainEXP(toAttack.getExp);
+                    gainEXP(toAttack.getExp());
                 }
             }else{IO.Write(getName() +" cast Shoot but " +toAttack.getName() +" blocked the damage");}
         }else{IO.Write(getName() + " cast Shoot but there is no enemy in range");}

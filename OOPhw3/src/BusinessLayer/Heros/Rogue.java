@@ -14,14 +14,14 @@ public class Rogue extends Hero implements HeroicUnit {
     private IOoperation IO = new IOController();
 
     public Rogue(int x ,int y, String name , int healamount, int healthpool,int attackpoints,int defensepoints, int cost){
-        super(x,y,name,healamount,healthpool,attackpoints,defensepoints);
+        super(x,y,name,healamount,healthpool,attackpoints,defensepoints,1);
         this.cost = cost;
     }
 
 
     public boolean gainEXP(int xp) {
         if(super.gainEXP(xp))
-        return this.LevelUp();
+        return this.LevelUps();
         return  false;
     }
 
@@ -37,7 +37,7 @@ public class Rogue extends Hero implements HeroicUnit {
         return inrange;
     }
 
-    public boolean LevelUp(){
+    public boolean LevelUps(){
         currentEnergy = 100;
         setAttack(getAttack() + (3*getLevel()));
         IO.Write("Rogue bonus: Energy filled, " + 3*getLevel() + " attackpoints" );
@@ -58,7 +58,7 @@ public class Rogue extends Hero implements HeroicUnit {
                 if (getAttack() - def > 0) {
                     IO.Write(getName() +" cast Fan of Knives on " + e.getName() +" and dealt " + getAttack() +" damage");
                     if (e.impair(getAttack())){
-                        gainEXP(e.getExp);
+                        gainEXP(e.getExp());
                     }
                 } else {
                     IO.Write(e.getName() + " Blocked Fan of Knives damage");

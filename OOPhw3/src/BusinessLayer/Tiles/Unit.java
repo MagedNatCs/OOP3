@@ -13,19 +13,22 @@ public abstract class Unit extends Tile {
     private int healthamount;
     private int Attackpoints;
     private int Defensepoints;
+    private int XP;
     private IOoperation IO;
 
-    public Unit(String name, int healthpool,int healthamount,int attackpoints,int defensepoints ,int x, int y, char symbol){
+    public Unit(String name, int healthpool,int healthamount,int attackpoints,int defensepoints ,int x, int y, char symbol,int xp){
         super(symbol,x,y);
         this.name = name;
         this.healthpool = healthpool;
         this.healthamount = healthamount;
         this.Attackpoints = attackpoints;
         this.Defensepoints = defensepoints;
+        this.XP = xp;
         this.IO = new IOController();
     }
 
-    public String describe() {
+    public int getExp(){return XP;}
+    public String description() {
         return String.format("%s: ---> \t\tHealth: %s\t/\t%s\t\tAttack: %d\t\tDefense: %d", getName(), getHealthamount(),getHealthpool(), getAttack(), getDefense());
     }
 
@@ -41,7 +44,7 @@ public abstract class Unit extends Tile {
 
 
     //things happen on tick !!!!!....
-
+    public abstract int [] Action();
 
 
     public String toString(){
@@ -71,15 +74,21 @@ public abstract class Unit extends Tile {
         return false;
     }
     public void engage(Unit opponent){
+        IO.Write(name + " engaged " + opponent.getName() + " to battle");
         int attackerDamage = this.Roll(1);
         int attackedDefense = opponent.Roll(0);
-        IO.Write(name + " engaged " + opponent.getName() + " to battle");
-        if(attackerDamage - attackedDefense > 0){
-            IO.Write(name +" dealt damage equal to " + attackerDamage + " to " + opponent.getName() + ".");
-            opponent.impair(attackerDamage);
+
+        int hmode=attackerDamage - attackedDefense;
+        if(hmode > 0){
+            IO.Write(name +" dealt damage equal to " + hmode + " to " + opponent.getName() + ".");
+            opponent.impair(hmode);
+            IO.Write(opponent.description());
+            return;
         }
+        else{IO.Write(opponent.getName() +" blocked the damage");}
+        IO.Write(opponent.description());
     }
-    public int range(Unit other){
-        return (int)sqrt(((this.getXcord()-other.getXcord())*(this.getXcord()-other.getXcord()))+((this.getYcord()-other.getYcord())*(this.getYcord()-other.getYcord())));
+    public double range(Unit other){
+        return sqrt(((this.getXcord()-other.getXcord())*(this.getXcord()-other.getXcord()))+((this.getYcord()-other.getYcord())*(this.getYcord()-other.getYcord())));
     }
 }

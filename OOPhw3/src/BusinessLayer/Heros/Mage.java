@@ -17,8 +17,9 @@ public class Mage extends Hero implements HeroicUnit {
     private int abilityRange;
     private IOoperation IO = new IOController();
 
-    public Mage(int x, int y, String name, int healthamount, int healthpool, int attackpoints, int defensepoints, int manapool, int manacost, int spellpower, int hitcount, int abilityrng) {
-        super(x, y, name, healthamount, healthpool, attackpoints, defensepoints);
+    public Mage(int x, int y, String name, int healthamount, int healthpool, int attackpoints, int defensepoints, int manapool, int manacost, int spellpower, int hitcount, int abilityrng)
+    {
+        super(x, y, name, healthamount, healthpool, attackpoints, defensepoints,1);
         this.Manapool = manapool;
         this.currentMana = Manapool / 4;
         this.manaCost = manacost;
@@ -29,16 +30,17 @@ public class Mage extends Hero implements HeroicUnit {
 
 
     public boolean gainEXP(int Exp) {
-        if (super.gainEXP(Exp))
-            return this.LevelUp();
+        if (super.gainEXP(Exp)) {
+            return this.LevelUps();
+        }
         return false;
     }
 
-    public boolean LevelUp() {
+    public boolean LevelUps() {
         this.Manapool = this.Manapool + (25 * getLevel());
         this.currentMana = Math.min(this.currentMana + (Manapool / 4), Manapool);
         this.spellPower = this.spellPower + (10 * getLevel());
-        IO.Write(" Mage Bonus: " + 25 * getLevel() + " Manapool " + currentMana + (Manapool / 4) + " Mana " + 10 * getLevel() + " SpellPower ");
+        IO.Write(" Mage Bonus: " + 25 * getLevel() + "  Manapool  " + (Manapool / 4) + " Mana  " + 10 * getLevel() + "  SpellPower ");
         return true;
     }
 
@@ -55,7 +57,7 @@ public class Mage extends Hero implements HeroicUnit {
         List<Unit> inrange = EnmsINrange(abilityRange);
         if (!inrange.isEmpty()) {
             while (hits < hitsCount && !inrange.isEmpty()) {
-                Unit selected = inrange.get((int) (Math.random() * (inrange.size() + 1)));
+                Unit selected = inrange.get((int) (Math.random() * (inrange.size())));
                 int def = selected.Roll(0);
                 if (spellPower - def > 0) {
                     IO.Write(getName() + " attacked " + selected.getName() + " with Blizzard and dealt " + spellPower + " damage");

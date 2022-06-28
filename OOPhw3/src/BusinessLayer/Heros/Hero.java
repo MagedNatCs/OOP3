@@ -14,8 +14,8 @@ public abstract class Hero extends Unit implements HeroicUnit {
     private List<Unit> ingameEnemy = new LinkedList();
     private IOoperation IO = new IOController();
 
-    public Hero(int x, int y, String name, int healthamount, int healthpool, int attackpoints, int defensepoints) {
-        super(name, healthpool, healthamount, attackpoints, defensepoints, x, y, symbol);
+    public Hero(int x, int y, String name, int healthamount, int healthpool, int attackpoints, int defensepoints,int xp) {
+        super(name, healthpool, healthamount, attackpoints, defensepoints, x, y, symbol,xp);
     }
     public int getEXP() {
         return Experience;
@@ -31,16 +31,19 @@ public abstract class Hero extends Unit implements HeroicUnit {
         char input = IO.Read().charAt(0);
         switch (input){
             case 'w':
-                newCords[1] = getYcord() + 1; break;
+                newCords[1] = getYcord() - 1; break;
             case 's':
-                newCords[1] = getYcord() - 1;break;
+                newCords[1] = getYcord() + 1;break;
             case 'a':
                 newCords[0] = getXcord() - 1;break;
             case 'd':
                 newCords[0] = getXcord() + 1;break;
             case 'e':
                 castAbility();break;
+            default:
+                return newCords;
         }
+
         return newCords;
     }
 
@@ -49,7 +52,7 @@ public abstract class Hero extends Unit implements HeroicUnit {
     }
 
     public String description() {
-        return super.describe() + "Level: " + HeroLevel + "Experience: " + Experience;
+        return super.description() + "  Level: " + HeroLevel + "   Experience: " + Experience;
     }
 
     public boolean LevelUp() {
@@ -59,7 +62,7 @@ public abstract class Hero extends Unit implements HeroicUnit {
             HeroLevel += 1;
             setHealthpool(getHealthpool() + (10 * HeroLevel));
             setHealthamount(getHealthpool());
-            setAttack(getAttack() + (4 * getAttack()));
+            setAttack(getAttack() + (4 * HeroLevel));
             setDefense(getDefense() + HeroLevel);
             IO.Write(getName() + " has levelled up! and new Level is " + HeroLevel +
                     " and gained stats:  " + 10 * HeroLevel + " Healthpool, "
@@ -71,17 +74,18 @@ public abstract class Hero extends Unit implements HeroicUnit {
 
     public boolean gainEXP(int xp) {
         this.Experience += xp;
-        return LevelUp();
+        return this.LevelUp();
     }
 
     public void accept(Visitor v) {
         v.visit(this);
     }
 
+
     public void visit(Enemy opponent) {
         this.engage(opponent);
-        if (opponent.getHealthAmount() == 0) {
-            gainEXP(opponent.getEXP());
+        if (opponent.getHealthAmount() <= 0) {
+            gainEXP(opponent.getExp());
         }
     }
 

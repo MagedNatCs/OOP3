@@ -7,64 +7,77 @@ import static java.lang.Math.random;
 public class Monster extends Enemy{
     private int visionRange;
 
-    public Monster(String name, int healthpool, int healthamount, int attackpoints, int defensepoints, int x, int y, char symbol, int experienceValue,int visionRange) {
-        super(name, healthpool, healthamount, attackpoints, defensepoints, x, y, symbol, experienceValue);
-        this.visionRange=visionRange;
+    public Monster(String name, int healthpool, int healthamount, int attackpoints, int defensepoints, int x, int y, char symbol, int experienceValue,int visionRange, Unit hero) {
+        super(name, healthpool, healthamount, attackpoints, defensepoints, x, y, symbol, experienceValue, hero);
+        this.visionRange = visionRange;
     }
 
-    public void movement(Unit player){
+    public int getVisionRange(){return visionRange;}
+
+
+    @Override
+    public int [] Action(){
+        int[] newCord = new int[2];
+        newCord[0] = getXcord();
+        newCord[1]= getYcord();
+        Unit player = getHero();
         int dx,dy;
-        if(this.range(player)<visionRange){
+        double hmode=this.range(player);
+        if(hmode<(double)visionRange){
             dx=this.getXcord()- player.getXcord();
             dy=this.getYcord()-player.getYcord();
+            int tmpx=dx,tmpy=dy;
             if(dx<0)
-                dx=dx*-1;
+                tmpx=dx*-1;
             if(dy<0)
-                dy=dy*-1;
-            if(dx>dy){
+                tmpy=dy*-1;
+            if(tmpx>tmpy){
                 if(dx>0)
-                    this.move(Movements.LEFT);
+                    newCord=this.move(Movements.LEFT,newCord);
                 else
-                    this.move(Movements.RIGHT);
+                    newCord=this.move(Movements.RIGHT,newCord);
             }
             else{
                 if(dy>0)
-                    this.move(Movements.UP);
+                    newCord=this.move(Movements.UP,newCord);
                 else
-                    this.move(Movements.DOWN);
+                    newCord=this.move(Movements.DOWN,newCord);
             }
         }
         else{
-            int randomize=(int)(random()*4);
+            int randomize=(int)(Math.random()*(4+1));
             switch (randomize){
-                case 0: this.move(Movements.NONE);
+                case 0: newCord=this.move(Movements.NONE,newCord);
                 break;
-                case 1: this.move(Movements.LEFT);
+                case 1: newCord=this.move(Movements.LEFT,newCord);
                 break;
-                case 2: this.move(Movements.RIGHT);
+                case 2: newCord=this.move(Movements.RIGHT,newCord);
                 break;
-                case 3: this.move(Movements.UP);
+                case 3: newCord=this.move(Movements.UP,newCord);
                 break;
-                case 4: this.move(Movements.DOWN);
+                case 4: newCord=this.move(Movements.DOWN,newCord);
                 break;
                 //Just for debugging;
                 default:throw new IllegalArgumentException("Problem with math.random!");
             }
+
         }
+        return newCord;
     }
-    public void move(Movements direction){
+    private int[] move(Movements direction,int [] newCord){
         switch (direction){
-            case LEFT: this.setX(getXcord()-1);
+            case LEFT: newCord[0] = newCord[0] - 1;
             break;
-            case DOWN: this.setY(getYcord()-1);
+            case DOWN: newCord[1] = newCord[1] + 1;
             break;
-            case UP: this.setY(getYcord()+1);
+            case UP: newCord[1] = newCord[1] - 1;
             break;
-            case RIGHT: this.setX(getXcord()+1);
+            case RIGHT: newCord[0] = newCord[0] + 1;
             break;
             case NONE: break;
             //Just for debugging;
             default: throw new IllegalArgumentException("Illegal movement!");
         }
+        return newCord;
     }
 }

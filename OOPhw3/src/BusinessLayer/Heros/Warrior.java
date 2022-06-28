@@ -13,7 +13,7 @@ public class Warrior extends Hero implements HeroicUnit {
     private int Cooldown = 0;
     private IOoperation IO = new IOController();
     public Warrior(int x , int y, String name , int healamount, int healthpool,int attackpoints, int defensepoints, int abilityCD){
-        super(x,y,name,healamount,healthpool,attackpoints,defensepoints);
+        super(x,y,name,healamount,healthpool,attackpoints,defensepoints,1);
         this.AbilityCD = abilityCD;
     }
 
@@ -30,13 +30,13 @@ public class Warrior extends Hero implements HeroicUnit {
         double damageinit = (getHealthpool() * 0.1);
         List<Unit> inrange = EnmsINrange(3);
         if(!inrange.isEmpty()) {
-            Unit e = inrange.get((int) (Math.random() * (inrange.size() + 1)));
+            Unit e = inrange.get((int) (Math.random() * (inrange.size())));
             int def = e.Roll(0);
             int damage = (int)(damageinit - def);
             if(damage > 0) {
                 IO.Write(getName() + " dealt " + damageinit + " damage to " + e.getName());
                 if (e.impair(damage)) {
-                    this.gainEXP(e.getEXP());
+                    this.gainEXP(e.getExp());
                 }
             }
         }
@@ -55,7 +55,7 @@ public class Warrior extends Hero implements HeroicUnit {
         return inrange;
     }
 
-    public boolean LevelUp()
+    public boolean LevelUps()
     {
             Cooldown = 0;
             setHealthpool(getHealthpool() + (5*getLevel()));
@@ -66,7 +66,7 @@ public class Warrior extends Hero implements HeroicUnit {
     }
     public boolean gainEXP(int Exp){
         if(super.gainEXP(Exp))
-            return LevelUp();
+            return LevelUps();
         return false;
     }
 
