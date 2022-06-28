@@ -7,7 +7,7 @@ public class Trap extends Enemy{
     private int invisibilityTime;
     private int ticksCount=0;
     private boolean visible=true;
-
+    //Bonus trap doesnt die when special ability is casted
     public Trap(String name, int healthpool, int healthamount, int attackpoints,
                 int defensepoints, int x, int y, char symbol, int experienceValue,int visibilityTime,int invisibilityTime, Unit hero) {
         super(name, healthpool, healthamount, attackpoints, defensepoints, x, y, symbol, experienceValue,hero);

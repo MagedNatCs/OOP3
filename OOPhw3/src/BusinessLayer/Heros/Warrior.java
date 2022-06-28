@@ -37,6 +37,8 @@ public class Warrior extends Hero implements HeroicUnit {
                 IO.Write(getName() + " dealt " + damage + " damage to " + e.getName());
                 if (e.impair(damage)) {
                     this.gainEXP(e.getExp());
+                    inrange.remove(e);
+                    getEnemies().remove(e);
                 }
                 IO.Write(e.description());
             }

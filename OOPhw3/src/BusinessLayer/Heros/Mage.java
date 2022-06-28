@@ -62,7 +62,7 @@ public class Mage extends Hero implements HeroicUnit {
                 int damage=spellPower - def;
                 if (damage> 0) {
                     IO.Write(getName() + " attacked " + selected.getName() + " with Blizzard and dealt " + damage + " damage");
-                    if(selected.impair(spellPower)){
+                    if(selected.impair(damage)){
                         inrange.remove(selected);
                         this.gainEXP(selected.getExp());
                     }

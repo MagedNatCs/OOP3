@@ -117,6 +117,7 @@ public class GameBoard {
                     if (e.getHealthamount() <= 0) {
                         Tiles[e.getYcord()][e.getXcord()] = new Empty(e.getXcord(), e.getYcord());
                         ofdead.add(e);
+                        player.getEnemies().remove(e);
                 }
             }
             for (Unit dead: ofdead) {

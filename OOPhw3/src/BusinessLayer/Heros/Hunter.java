@@ -76,7 +76,7 @@ public class Hunter extends Hero implements HeroicUnit {
             int damage=getAttack() - def;
             if (damage > 0) {
                 IO.Write(getName() + " cast Shoot and shot " + toAttack.getName() + " for " +damage +" damage");
-                if (toAttack.impair(getAttack())) {
+                if (toAttack.impair(damage)) {
                     gainEXP(toAttack.getExp());
                 }
                 IO.Write(toAttack.description());
