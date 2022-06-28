@@ -63,8 +63,9 @@ public class Mage extends Hero implements HeroicUnit {
                 if (damage> 0) {
                     IO.Write(getName() + " attacked " + selected.getName() + " with Blizzard and dealt " + damage + " damage");
                     if(selected.impair(damage)){
-                        inrange.remove(selected);
                         this.gainEXP(selected.getExp());
+                        inrange.remove(selected);
+                        getEnemies().remove(selected);
                     }
                     IO.Write(selected.description());
                 } else {

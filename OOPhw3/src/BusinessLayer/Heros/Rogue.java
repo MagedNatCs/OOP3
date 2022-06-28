@@ -60,6 +60,8 @@ public class Rogue extends Hero implements HeroicUnit {
                     IO.Write(getName() +" cast Fan of Knives on " + e.getName() +" and dealt " + damage +" damage");
                     if (e.impair(damage)){
                         gainEXP(e.getExp());
+                        inrange.remove(e);
+                        getEnemies().remove(e);
                     }
                     IO.Write(e.description());
                 } else {
