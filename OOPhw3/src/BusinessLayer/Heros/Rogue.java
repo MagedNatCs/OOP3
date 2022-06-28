@@ -55,11 +55,13 @@ public class Rogue extends Hero implements HeroicUnit {
         if(!inrange.isEmpty()) {
             for (Unit e : inrange) {
                 int def = e.Roll(0);
-                if (getAttack() - def > 0) {
-                    IO.Write(getName() +" cast Fan of Knives on " + e.getName() +" and dealt " + getAttack() +" damage");
+                int damage=getAttack() - def;
+                if (damage > 0) {
+                    IO.Write(getName() +" cast Fan of Knives on " + e.getName() +" and dealt " + damage +" damage");
                     if (e.impair(getAttack())){
                         gainEXP(e.getExp());
                     }
+                    IO.Write(e.description());
                 } else {
                     IO.Write(e.getName() + " Blocked Fan of Knives damage");
                 }

@@ -59,12 +59,14 @@ public class Mage extends Hero implements HeroicUnit {
             while (hits < hitsCount && !inrange.isEmpty()) {
                 Unit selected = inrange.get((int) (Math.random() * (inrange.size())));
                 int def = selected.Roll(0);
-                if (spellPower - def > 0) {
-                    IO.Write(getName() + " attacked " + selected.getName() + " with Blizzard and dealt " + spellPower + " damage");
+                int damage=spellPower - def;
+                if (damage> 0) {
+                    IO.Write(getName() + " attacked " + selected.getName() + " with Blizzard and dealt " + damage + " damage");
                     if(selected.impair(spellPower)){
                         inrange.remove(selected);
                         this.gainEXP(selected.getExp());
                     }
+                    IO.Write(selected.description());
                 } else {
                     IO.Write(getName() + " tried to attack" + selected.getName() + " with Blizzard but " + selected.getName() + " Blocked the damage");
                 }

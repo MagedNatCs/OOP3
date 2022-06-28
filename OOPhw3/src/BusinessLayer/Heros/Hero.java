@@ -86,6 +86,11 @@ public abstract class Hero extends Unit implements HeroicUnit {
         this.engage(opponent);
         if (opponent.getHealthAmount() <= 0) {
             gainEXP(opponent.getExp());
+            int tmpx=this.getXcord(),tmpy=this.getYcord();
+            this.setX(opponent.getXcord());
+            this.setY(opponent.getYcord());
+            opponent.setX(tmpx);
+            opponent.setY(tmpy);
         }
     }
 

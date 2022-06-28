@@ -34,10 +34,11 @@ public class Warrior extends Hero implements HeroicUnit {
             int def = e.Roll(0);
             int damage = (int)(damageinit - def);
             if(damage > 0) {
-                IO.Write(getName() + " dealt " + damageinit + " damage to " + e.getName());
+                IO.Write(getName() + " dealt " + damage + " damage to " + e.getName());
                 if (e.impair(damage)) {
                     this.gainEXP(e.getExp());
                 }
+                IO.Write(e.description());
             }
         }
 

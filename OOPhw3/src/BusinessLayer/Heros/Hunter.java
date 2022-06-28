@@ -73,11 +73,13 @@ public class Hunter extends Hero implements HeroicUnit {
             idx = MinIdx(distances);
             Unit toAttack = allenms.get(idx);
             int def = toAttack.Roll(0);
-            if (getAttack() - def > 0) {
-                IO.Write(getName() + " cast Shoot and shot " + toAttack.getName() + " for " + getAttack() +" damage");
+            int damage=getAttack() - def;
+            if (damage > 0) {
+                IO.Write(getName() + " cast Shoot and shot " + toAttack.getName() + " for " +damage +" damage");
                 if (toAttack.impair(getAttack())) {
                     gainEXP(toAttack.getExp());
                 }
+                IO.Write(toAttack.description());
             }else{IO.Write(getName() +" cast Shoot but " +toAttack.getName() +" blocked the damage");}
         }else{IO.Write(getName() + " cast Shoot but there is no enemy in range");}
 
