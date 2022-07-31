@@ -23,7 +23,7 @@ public class Monster extends Enemy{
         Unit player = getHero();
         int dx,dy;
         double hmode=this.range(player);
-        if(hmode<(double)visionRange){
+        if(hmode<=(double)visionRange){
             dx=this.getXcord()- player.getXcord();
             dy=this.getYcord()-player.getYcord();
             int tmpx=dx,tmpy=dy;

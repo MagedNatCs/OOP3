@@ -25,8 +25,9 @@ public class Warrior extends Hero implements HeroicUnit {
         }
         Cooldown = AbilityCD;
         int healingamt = Math.min(getHealthamount() + (10*getDefense()) , getHealthpool());
+        int prev = getHealthamount();
         setHealthamount(healingamt);
-        IO.Write(getName() + " has cast Avenger's Shield and healed for " + healingamt);
+        IO.Write(getName() + " has cast Avenger's Shield and healed for " + (healingamt-prev));
         double damageinit = (getHealthpool() * 0.1);
         List<Unit> inrange = EnmsINrange(3);
         if(!inrange.isEmpty()) {
